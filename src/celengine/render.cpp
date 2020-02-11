@@ -3243,11 +3243,12 @@ static void renderSphereUnlit(const RenderInfo& ri,
     int nTextures = 0;
 
     ShaderProperties shadprop;
+    shadprop.texUsage = ShaderProperties::VertexColors;
 
     // Set up the textures used by this object
     if (ri.baseTex != nullptr)
     {
-        shadprop.texUsage = ShaderProperties::DiffuseTexture;
+        shadprop.texUsage |= ShaderProperties::DiffuseTexture;
         textures[nTextures++] = ri.baseTex;
     }
     if (ri.nightTex != nullptr)
@@ -3268,6 +3269,7 @@ static void renderSphereUnlit(const RenderInfo& ri,
     prog->use();
 
     prog->textureOffset = 0.0f;
+    glColor(ri.color);
     // TODO: introduce a new ShaderProperties light model, so those
     // assignments are not required
     prog->ambientColor = Color::White.toVector3();

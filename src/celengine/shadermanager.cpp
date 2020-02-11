@@ -1712,6 +1712,11 @@ ShaderManager::buildVertexShader(const ShaderProperties& props)
         }
     }
 
+    if (props.texUsage & ShaderProperties::VertexColors)
+    {
+        source += DeclareVarying("vertexcolor", Shader_Vector4);
+    }
+
     // Begin main() function
     source += "\nvoid main(void)\n{\n";
     source += "float NL;\n";
@@ -1748,6 +1753,12 @@ ShaderManager::buildVertexShader(const ShaderProperties& props)
         if (props.hasSpecular())
             source += "spec = vec4(0.0, 0.0, 0.0, 0.0);\n";
     }
+
+    if (props.texUsage & ShaderProperties::VertexColors)
+    {
+        source += "vertexcolor = gl_Color;\n";
+    }
+
 
     for (unsigned int i = 0; i < props.nLights; i++)
     {
@@ -2079,6 +2090,11 @@ ShaderManager::buildFragmentShader(const ShaderProperties& props)
         source += DeclareVarying("pointFade", Shader_Float);
     }
 
+    if (props.texUsage & ShaderProperties::VertexColors)
+    {
+        source += DeclareVarying("vertexcolor", Shader_Vector4);
+    }
+
     source += "\nvoid main(void)\n{\n";
     source += "vec4 color;\n";
 
@@ -2239,10 +2255,16 @@ ShaderManager::buildFragmentShader(const ShaderProperties& props)
             source += "color = texture2D(diffTex, gl_TexCoord[0].st);\n";
         else
             source += "color = texture2D(diffTex, " + diffTexCoord + ".st);\n";
+
+        if (props.texUsage & ShaderProperties::VertexColors)
+            source += "color *= vertexcolor;\n";
     }
     else
     {
-        source += "color = vec4(1.0, 1.0, 1.0, 1.0);\n";
+        if (props.texUsage & ShaderProperties::VertexColors)
+            source += "color = vertexcolor;\n";
+        else
+            source += "color = vec4(1.0, 1.0, 1.0, 1.0);\n";
     }
 
 #if POINT_FADE
