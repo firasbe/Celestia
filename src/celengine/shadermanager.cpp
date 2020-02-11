@@ -1591,6 +1591,8 @@ ShaderManager::buildVertexShader(const ShaderProperties& props)
 {
     string source(CommonHeader);
 
+    source += "// Shader\n";
+
     source += DeclareLights(props);
     if (props.lightModel == ShaderProperties::SpecularModel)
         source += "uniform float shininess;\n";
@@ -2498,6 +2500,8 @@ ShaderManager::buildRingsVertexShader(const ShaderProperties& props)
 {
     string source(CommonHeader);
 
+    source += "// Rings Shader\n";
+
     source += DeclareLights(props);
 
     source += DeclareVarying("position_obj", Shader_Vector3);
@@ -2650,6 +2654,8 @@ ShaderManager::buildAtmosphereVertexShader(const ShaderProperties& props)
 {
     string source(CommonHeader);
 
+    source += "// Atmosphere Shader\n";
+
     source += DeclareLights(props);
     source += "uniform vec3 eyePosition;\n";
     source += ScatteringConstantDeclarations(props);
@@ -2744,6 +2750,8 @@ GLVertexShader*
 ShaderManager::buildEmissiveVertexShader(const ShaderProperties& props)
 {
     string source(CommonHeader);
+
+    source += "// Emissive Shader\n";
 
     source += "uniform float opacity;\n";
 
@@ -3001,6 +3009,8 @@ GLVertexShader*
 ShaderManager::buildSimpleVertexShader(uint32_t props)
 {
     ostringstream source;
+
+    source << "// Simple Shader\n";
 
     source << CommonHeader;
 
