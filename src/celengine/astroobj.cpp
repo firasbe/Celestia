@@ -5,11 +5,47 @@
 #include "astroobj.h"
 #include "category.h"
 
+AstroObject::AstroObject(AstroObject &o)
+{
+    setIndex(o.getIndex());
+
+    auto cats = o.getCategories();
+    if (cats != nullptr)
+        for (auto *cat : *cats)
+            addToCategory(cat);
+}
+
+AstroObject::AstroObject(AstroObject &&o)
+{
+    setIndex(o.getIndex());
+
+    auto cats = o.getCategories();
+    if (cats != nullptr)
+        for (auto *cat : *cats)
+            addToCategory(cat);
+    o.clearCategories();
+}
+
+AstroObject::~AstroObject()
+{
+    if (getIndex() != AstroCatalog::InvalidIndex)
+        freeIndexNumber(getIndex());
+
+    clearCategories();
+}
+
 void AstroObject::setIndex(AstroCatalog::IndexNumber nr)
 {
     if (m_mainIndexNumber != AstroCatalog::InvalidIndex)
         DPRINTF(LOG_LEVEL_WARNING, "AstroObject::setIndex(%u) on object with already set index: %u!\n", nr, m_mainIndexNumber);
-    m_mainIndexNumber = nr;
+    if (m_mainIndexNumber != nr)
+    {
+        if (m_mainIndexNumber != AstroCatalog::InvalidIndex)
+            freeIndexNumber(nr);
+        m_mainIndexNumber = nr;
+        if (nr != AstroCatalog::InvalidIndex)
+            assignIndexNumber(nr, this);
+    }
 }
 
 Selection AstroObject::toSelection()
@@ -133,5 +169,7 @@ bool AstroObject::loadCategories(Hash *hash, DataDisposition disposition, const 
     }
     return ret;
 }
+
+std::unordered_map<AstroCatalog::IndexNumber, AstroObject*> AstroObject::m_mainIndex;
 
 AstroCatalog::IndexNumber AstroObject::m_autoIndex { MaxAutoIndex };

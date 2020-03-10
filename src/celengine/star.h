@@ -241,6 +241,13 @@ public:
     Star() = default;
     virtual ~Star();
 
+    Star(Star &&s) : AstroObject(std::move(s))
+    {
+        setPosition(s.getPosition());
+        setAbsoluteMagnitude(s.getAbsoluteMagnitude());
+        setDetails(s.getDetails());
+    }
+
     virtual Selection toSelection();
 
     /** This getPosition() method returns the approximate star position; that is,

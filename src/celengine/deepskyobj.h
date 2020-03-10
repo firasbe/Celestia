@@ -38,9 +38,10 @@ class DeepSkyObject : public AstroObject
  public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-    virtual Selection toSelection();
     DeepSkyObject() = default;
     virtual ~DeepSkyObject() = default;
+
+    virtual Selection toSelection();
 
     Eigen::Vector3d getPosition() const;
     void setPosition(const Eigen::Vector3d&);
