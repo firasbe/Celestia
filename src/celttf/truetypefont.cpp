@@ -12,7 +12,7 @@
 #include <array>
 #include <iostream>
 #include <vector>
-#include <GL/glew.h>
+#include "glsupport.h"
 #include <fmt/printf.h>
 #include <celutil/utf8.h>
 #include <celengine/render.h>

@@ -37,7 +37,7 @@
 #include <celengine/axisarrow.h>
 #include <celengine/planetgrid.h>
 
-#include <GL/glew.h>
+#include "glsupport.h"
 #include "celestia/celestiacore.h"
 #include "celestia/avicapture.h"
 #include "celestia/helper.h"
@@ -62,6 +62,7 @@
 #include <locale.h>
 #include <fmt/printf.h>
 
+using namespace celestia;
 using namespace std;
 
 typedef pair<int,string> IntStrPair;
@@ -1947,8 +1948,7 @@ HWND CreateOpenGLWindow(int x, int y, int width, int height,
 
     if (firstContext)
     {
-        GLenum glewErr = glewInit();
-        if (glewErr != GLEW_OK)
+        if (!gl::init())
         {
             MessageBox(NULL, "Could not set up OpenGL extensions.", "Fatal Error",
                        MB_OK | MB_ICONERROR);
