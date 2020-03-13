@@ -17,7 +17,6 @@
 
 #include <Eigen/Core>
 #include "glsupport.h"
-#include <GL/glu.h>
 
 #include <celutil/filetype.h>
 #include <celutil/debug.h>

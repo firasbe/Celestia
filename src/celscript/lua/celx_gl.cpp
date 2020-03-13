@@ -13,7 +13,6 @@
 #include "celx_internal.h"
 #include "celx_object.h"
 #include <celengine/glsupport.h>
-#include <GL/glu.h>
 
 
 // ==================== OpenGL ====================

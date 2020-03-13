@@ -16,7 +16,6 @@
 #include <QMouseEvent>
 #include <QTextStream>
 #include <Eigen/LU>
-#include <GL/glu.h>
 #include <algorithm>
 #include <iostream>
 
