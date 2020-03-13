@@ -27,6 +27,8 @@
 #include <commdlg.h>
 #include <shellapi.h>
 
+#include <celengine/glsupport.h>
+
 #include <celmath/mathlib.h>
 #include <celutil/debug.h>
 #include <celutil/gettext.h>
@@ -34,10 +36,7 @@
 #include <celutil/filetype.h>
 #include <celengine/astro.h>
 #include <celscript/legacy/cmdparser.h>
-#include <celengine/axisarrow.h>
-#include <celengine/planetgrid.h>
 
-#include "glsupport.h"
 #include "celestia/celestiacore.h"
 #include "celestia/avicapture.h"
 #include "celestia/helper.h"
